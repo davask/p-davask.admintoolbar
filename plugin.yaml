@@ -1,0 +1,6 @@
+plugin:
+    name: 'davask.admintoolbar::lang.plugin.name'
+    description: 'davask.admintoolbar::lang.plugin.description'
+    author: Davask
+    icon: oc-icon-cogs
+    homepage: 'https://github.com/davask/p-davask.admintoolbar'
