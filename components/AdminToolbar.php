@@ -1,6 +1,8 @@
 <?php namespace Davask\AdminToolbar\Components;
 
+use System\Classes\CombineAssets;
 use Cms\Classes\ComponentBase;
+use Url;
 use Auth;
 use Backend;
 use BackendAuth;
@@ -18,13 +20,23 @@ class AdminToolbar extends ComponentBase
     /**
      * Returns the logged in user, if available
      */
+    public function adminLogo()
+    {
+        return Url::asset('modules/backend/assets/images/dashboard-icon.svg');
+    }
+
+    /**
+     * Returns the logged in user, if available
+     */
     public function user()
     {
         if (!Auth::check()) {
             return null;
         }
 
-        return Auth::getUser();
+        $user = Auth::getUser();
+
+        return $user;
     }
 
     /**
@@ -37,16 +49,6 @@ class AdminToolbar extends ComponentBase
         }
 
         return BackendAuth::getUser();
-    }
-
-    /**
-     * Executed when this component is initialized
-     */
-    public function prepareVars()
-    {
-        $this->page['user'] = $this->user();
-        $this->page['backendUser'] = $this->backendUser();
-        $this->page['menus'] = $this->menus();
     }
 
     public function menus()
@@ -63,12 +65,12 @@ class AdminToolbar extends ComponentBase
             ],
         ];
 
-        if ($this->page['user']) {
+        if ($user = $this->user()) {
             $menus["user"] = [
-                "myaccount" => Backend::url('rainlab/user/users/preview/'. $this->page['user']->id),
+                "myaccount" => Backend::url('rainlab/user/users/preview/'. $user->id),
             ];
         }
-        if ($this->page['backendUser']) {
+        if ($this->backendUser()) {
             $menus["backendUser"] = [
                 "myaccount" => Backend::url('backend/users/myaccount'),
             ];
@@ -83,7 +85,18 @@ class AdminToolbar extends ComponentBase
      */
     public function onRun()
     {
-        $this->prepareVars();
+        $addCsss = [
+            'davask/admintoolbar/assets/scss/toolbar.scss',
+        ];
+        if (\Config::get('app.debug', false)) {
+            for ($i=0; $i < count($addCsss); $i++) {
+                $this->addCss(CombineAssets::combine([
+                    $addCsss[$i]
+                ], plugins_path()).'.css?p='.urlencode(str_replace(['assets/', '/'], ['', '-'],$addCsss[$i])));
+            }
+        } else {
+            $this->addCss(CombineAssets::combine($addCsss, plugins_path()).'.css');
+        }
     }
 
 

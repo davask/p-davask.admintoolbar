@@ -1,7 +1,7 @@
 {% if app.debug %}
 <nav id="navbar-front-admin" class="navbar navbar-expand-lg navbar-dark bg-faded" data-toggle="affix">
   <div class="container-fluid">
-    <a href="{{ menus.global.backend }}" class="navbar-brand"><img class="svg-icon" src="{{ 'admin_logo.png' | media }}?v={{ version }}" alt="logo de la chaine du droit"></a>
+    <a href="{{ adminToolbar.menus.global.backend }}" class="navbar-brand"><img class="svg-icon" src="{{ adminToolbar.adminLogo }}?v={{ version }}" alt="logo de la chaine du droit"></a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,24 +9,24 @@
 
     <div class="collapse navbar-collapse" id="AdminNav">
         <ul class="navbar-nav mr-auto">
-{% for title, link in menus.menu %}
+{% if adminToolbar.backendUser %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ adminToolbar.menus.backendUser.myaccount }}"><img src="{{ adminToolbar.backendUser.avatar.path | default( 'assets/images/avatar.png' | theme ) }}" alt="{{ adminToolbar.backendUser.login }}" class="svg-icon"> {{ adminToolbar.backendUser.login }}</a>
+      </li>
+{% endif %}
+{% for title, link in adminToolbar.menus.menu %}
           <li class="nav-item">
             <a class="nav-link" href="{{ link }}">{{ title | capitalize }}</a>
           </li>
 {% endfor %}
         </ul>
-{% if user %}
+{% if adminToolbar.user or adminToolbar.backendUser %}
         <ul class="navbar-nav ml-auto">
+    {% if adminToolbar.user %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ menus.user.myaccount }}"><img src="{{ user.avatar.path }}" alt="{{ user.name }}" class="svg-icon"> {{ user.name }}</a>
+            <a class="nav-link" href="{{ adminToolbar.menus.user.myaccount }}"><img src="{{ adminToolbar.user.avatar.path | default( 'assets/images/avatar.png' | theme ) }}" alt="{{ adminToolbar.user.name }}" class="svg-icon"> {{ adminToolbar.user.name }}</a>
           </li>
-        </ul>
-{% endif %}
-{% if backendUser %}
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ menus.backendUser.myaccount }}"><img src="{{ backendUser.avatar.path }}" alt="{{ backendUser.name }}" class="svg-icon"> {{ backendUser.name }}</a>
-          </li>
+    {% endif %}
         </ul>
 {% endif %}
     </div> <!-- /collapse -->

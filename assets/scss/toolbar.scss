@@ -1,0 +1,17 @@
+nav#navbar-front-admin {
+    background: #5394c4;
+    height: 40px;
+    border-bottom: 1px solid #8bafd3;
+    a {
+        color: #ffffff;
+    }
+    .container-fluid {
+        max-width: initial;
+    }
+    img.svg-icon {
+        width: 30px;
+    }
+    .nav-link .svg-icon {
+        width: 21px;
+    }
+}
