@@ -1,4 +1,4 @@
-{% if app.debug %}
+{% if adminToolbar.backendUser and app.debug %}
 <nav id="navbar-front-admin" class="navbar navbar-expand-lg navbar-dark bg-faded" data-toggle="affix">
   <div class="container-fluid">
     <a href="{{ adminToolbar.menus.global.backend }}" class="navbar-brand"><img class="svg-icon" src="{{ adminToolbar.adminLogo }}?v={{ version }}" alt="logo de la chaine du droit"></a>
@@ -23,6 +23,13 @@
 {% if adminToolbar.user or adminToolbar.backendUser %}
         <ul class="navbar-nav ml-auto">
     {% if adminToolbar.user %}
+          <li class="nav-item">
+            {% if edit %}
+            <a class="nav-link" href="{{ 'speaker' | page({ speaker_id: user.id }) }}">Fermer</a>
+            {% else %}
+            <a class="nav-link" href="{{ 'speaker' | page({ speaker_id: user.id }) }}?edit=1">Editer</a>
+            {% endif %}
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ adminToolbar.menus.user.myaccount }}"><img src="{{ adminToolbar.user.avatar.path | default( 'assets/images/avatar.png' | theme ) }}" alt="{{ adminToolbar.user.name }}" class="svg-icon"> {{ adminToolbar.user.name }}</a>
           </li>
