@@ -59,6 +59,7 @@ class AdminToolbar extends ComponentBase
             ],
             "menu" => [
                 "cms" => Backend::url('cms'),
+                "static" => Backend::url('rainlab/pages'),
                 "plugins" => Backend::url('system/updates'),
                 "menu" => Backend::url('benfreke/menumanager/menus'),
                 "users" => Backend::url('rainlab/user/users'),
