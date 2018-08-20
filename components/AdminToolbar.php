@@ -64,6 +64,11 @@ class AdminToolbar extends ComponentBase
                 "menu" => Backend::url('benfreke/menumanager/menus'),
                 "users" => Backend::url('rainlab/user/users'),
             ],
+            "lcdd" => [
+                "questions" => Backend::url('davask/lcdd/questions'),
+                "faq" => Backend::url('redmarlin/faq/questions'),
+                "blog" => Backend::url('rainlab/blog/posts'),
+            ],
         ];
 
         if ($user = $this->user()) {
